@@ -14,47 +14,39 @@ return {
 		},
 	},
 	{
-	  "neovim/nvim-lspconfig",
-	  config = function()
-	    local lspConfig = require("lspconfig")
-	    local mason_registry = require("mason-registry")
-	    local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
+		"neovim/nvim-lspconfig",
+		config = function()
+			local lspConfig = require("lspconfig")
+			local mason_registry = require("mason-registry")
+			local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
 
-	    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-	    lspConfig.ts_ls.setup({
-		capabilities=capabilities,
-		init_options = {
-		  plugins = {
-		    {
-		      name = '@vue/typescript-plugin',
-		      location = vue_language_server_path,
-		      languages = { 'vue' },
-		      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' }
-		    },
-		  }
-		},
-		filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-		settings = {
-		    typescript = {
-		
-			    tsserver = {
-			  useSyntaxServer = false,
-			},
-			inlayHints = {
-			  includeInlayParameterNameHints = 'all',
-			  includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-			  includeInlayFunctionParameterTypeHints = true,
-			  includeInlayVariableTypeHints = true,
-			  includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-			  includeInlayPropertyDeclarationTypeHints = true,
-			  includeInlayFunctionLikeReturnTypeHints = true,
-			  includeInlayEnumMemberValueHints = true,
-			},
-		      },
-		}
-	      })
-	    lspConfig.volar.setup({})
-	  end,
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local vue_plugin = {
+				name = '@vue/typescript-plugin',
+				location = vue_language_server_path,
+				languages = { 'vue' },
+				configNamespace = 'typescript',
+			}
+			local vtsls_config = {
+				settings = {
+					vtsls = {
+						tsserver = {
+							globalPlugins = {
+								vue_plugin,
+							},
+						},
+					},
+				},
+				filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+			}
+			-- If you are on most recent `nvim-lspconfig
+			lspConfig.eslint.setup({
+			})
+			local vue_ls_config = {}
+			vim.lsp.config('vtsls', vtsls_config)
+			vim.lsp.config('vue_ls', vue_ls_config)
+			vim.lsp.enable({'vtsls', 'vue_ls'})
+		end,
 	}
 }
 
