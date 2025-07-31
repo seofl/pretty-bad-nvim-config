@@ -1,5 +1,5 @@
 # Paths (customize as needed)
-$source = "$env:USERPROFILE\my-nvim-config"
+$source = "D:\projects\pretty-bad-nvim-config"
 $dest = "$env:USERPROFILE\AppData\Local\nvim"
 $backup = "$env:USERPROFILE\AppData\Local\nvim.old"
 
