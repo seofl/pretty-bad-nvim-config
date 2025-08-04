@@ -1,4 +1,16 @@
 vim.g.mapleader = " "
+vim.opt.number = true
+vim.opt.relativenumber=true
+vim.opt.tabstop=2
+vim.o.signcolumn="yes"
+vim.o.winborder="rounded"
+
+vim.keymap.set({'n', 'v', 'x'}, '<leader>d', '"+d<CR>')
+vim.keymap.set({'n', 'v', 'x'}, '<leader>y', '"+y<CR>')
+vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p<CR>')
+
+
+
 require("config.lazy")
 require('mason').setup()
 vim.cmd("colorscheme kanagawa")
