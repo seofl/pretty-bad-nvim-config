@@ -44,6 +44,13 @@ return {
 			local vue_ls_config = {}
 			vim.lsp.config('vtsls', vtsls_config)
 			vim.lsp.config('vue_ls', vue_ls_config)
+			vim.lsp.config('lua_ls', {settings = {
+							Lua={
+											workspace={
+															library=vim.api.nvim_get_runtime_file("", true)
+											}
+							}
+			}})
 			vim.lsp.enable({'vtsls', 'vue_ls', 'lua_ls'})
 		end,
 	}
